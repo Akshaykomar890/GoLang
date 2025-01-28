@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"slices"
+)
+
 //Slices are Dynamic Array
 func main(){
 
@@ -44,10 +49,10 @@ func main(){
 	// fmt.Println(nums[0:])  //123 or 1: -> 2,3
 
 	//Compare
-	// var nums1 = []int{1,2}
-	// var nums2 = []int{1,2}
+	 var nums1 = []int{1,2}
+	 var nums2 = []int{1,2}
 
-	// fmt.Println(slices.Equal(nums1,nums2))
+	 fmt.Println(slices.Equal(nums1,nums2))
 
 
 
