@@ -54,6 +54,7 @@ func main(){
 
 	 fmt.Println(slices.Equal(nums1,nums2))
 
+	
 
 
 
