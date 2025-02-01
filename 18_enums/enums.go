@@ -32,6 +32,8 @@ import "fmt"
 
 //To Define a Enums using a String Values
 //It helps in readability ,maintains a code structure
+
+
 type Orders string
 
 const (
