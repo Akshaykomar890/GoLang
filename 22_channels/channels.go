@@ -19,20 +19,71 @@ import (
 // 	values <- result //blocking
 // }
 
-//How to use wait group in channels
-func task(done chan bool){
-	defer func () { done <-true}()
+//How to use wait group in channels unbufferd
+// func task(done chan bool){
+// 	defer func () { done <-true}()
 
-	fmt.Println("Procssing....")
+// 	fmt.Println("Procssing....")
+// }
+
+//Single Chan
+// func task(emailChan chan string,done chan bool){
+// 	defer func ()  { done <- true}()
+// 	for email:= range emailChan{
+// 		fmt.Println("Data received",email)
+// 		time.Sleep(time.Second)
+// 	}
+// }
+
+//What if we want only chan to send or receive
+func task(emailChan <-chan string,done chan<- bool){
+	defer func ()  { done <- true}()
+	//emailChan <- "ddf" //we can send or receive by default 
+	//if we need to send only we use header "chan<-"
+	//if we need to receive only we use header "<-chan"
+	//emailChan<-"ffg" // gives error because it only receive
+	//<-done it gives error because i used only to send not receive
+	for email:= range emailChan{
+		fmt.Println("Data received",email)
+	}
 }
-
 
 func main(){
 
-	//How to use wait group in channels
-	done:=make(chan bool)
-	go task(done)
-	<-done //block
+	//What if we have multipleChan
+	chan1:=make(chan int)
+	chan2:=make(chan string)
+	
+	go func ()  {
+		chan1 <- 12
+	}()
+
+	go func ()  {
+		chan2 <- "Send"
+	}()
+
+	fmt.Println(<-chan1)
+	fmt.Println(<-chan2)
+	
+
+
+
+
+
+	//Single Chan
+	// emailChan:= make(chan string,100)
+	// done := make(chan bool)
+
+	// go task(emailChan,done)
+
+	// for i := 0; i < 5; i++ {
+	// 	emailChan <- fmt.Sprintf("%d data sent",i)
+	// }
+	// fmt.Println("Done Sending")
+	// //this is important
+	// close(emailChan)
+	// <-done //receive 
+	// fmt.Println("Done")
 
 
 
@@ -40,6 +91,10 @@ func main(){
 
 
 
+	//How to use wait group in channels unbufferd
+	// done:=make(chan bool)
+	// go task(done)
+	// <-done //block  //receive
 
 
 	//Channels Communication Done
