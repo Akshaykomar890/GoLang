@@ -70,7 +70,7 @@ func main(){
 
 
 
-	//Single Chan
+	//Single Chan //Buffered
 	// emailChan:= make(chan string,100)
 	// done := make(chan bool)
 
