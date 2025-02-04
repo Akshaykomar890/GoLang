@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"os"
 )
 
@@ -65,11 +67,11 @@ func main(){
 
 	//File Write 
 	//Create File
-	file,error:=os.Create("example2.txt")
-	if error != nil{
-		panic(error)
-	}
-	defer file.Close()
+	// file,error:=os.Create("example2.txt")
+	// if error != nil{
+	// 	panic(error)
+	// }
+	// defer file.Close()
 	//write 1st method
 	// file.WriteString("Hi Golang")
 	// file.WriteString("Nice lang") //it appends
@@ -78,7 +80,41 @@ func main(){
 	// byte := []byte("hello go lang")
 	// file.Write(byte)
 
+	//stream get data and transform one to another
+	//read and write to another file
+	sourcefile,error:=os.Open("example.txt")
+	if error != nil{
+		panic(error)
+	}
+	defer sourcefile.Close()
 	
+	destfile,error:=os.Create("example2.txt")
+	if error != nil{
+		panic(error)
+	}
+
+	defer destfile.Close()
+
+	//stream of data
+	//buffIo we use this
+	//first read then write
+	reader := bufio.NewReader(sourcefile) //sourcefile is also reader
+	write :=bufio.NewWriter(destfile)
+
+	for{
+		b,error:=reader.ReadByte()
+		if error != nil{
+			if error.Error() != "EOF" {
+				panic(error)	
+			}
+			break
+		}
+		write.WriteByte(b)
+	}
+	write.Flush()  //any data flush found last
+	fmt.Println("Written new file")
+
+
 	
 
 
