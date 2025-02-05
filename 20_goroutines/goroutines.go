@@ -20,6 +20,7 @@ func main(){
 		 go func (i int)  {
 			fmt.Println(i)
 		}(i) //Receive value
+		
 	}
 
 	time.Sleep(time.Second*2)
